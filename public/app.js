@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("itinerary-form");
     const submitBtn = document.getElementById("submit-btn");
     const printBtn = document.getElementById("print-btn");
+    const copyBtn = document.getElementById("copy-btn");
     const emptyState = document.getElementById("empty-state");
     const outputContainer = document.getElementById("itinerary-output");
     const errorContainer = document.getElementById("error-container");
@@ -17,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const lines = text.split("\n");
         let html = [];
         let inList = false;
+        let inChecklist = false;
 
         for (let line of lines) {
             let trimmed = line.trim();
@@ -26,15 +28,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Handle headings: ### Title -> <h3>Title</h3>
             if (trimmed.startsWith("###")) {
-                if (inList) {
-                    html.push("</ul>");
-                    inList = false;
-                }
+                if (inList) { html.push("</ul>"); inList = false; }
+                if (inChecklist) { html.push("</ul>"); inChecklist = false; }
                 const headerText = trimmed.replace(/^###\s*/, "");
                 html.push(`<h3>${headerText}</h3>`);
             } 
+            // Handle checklists: - [ ] Item -> <li class="checklist-item"><input type="checkbox"> Item</li>
+            else if (trimmed.startsWith("- [ ] ") || trimmed.startsWith("- [x] ")) {
+                if (inList) { html.push("</ul>"); inList = false; }
+                if (!inChecklist) {
+                    html.push("<ul class='checklist'>");
+                    inChecklist = true;
+                }
+                const isChecked = trimmed.startsWith("- [x] ");
+                const itemText = trimmed.substring(6);
+                html.push(`<li><input type="checkbox" ${isChecked ? 'checked' : ''}> ${itemText}</li>`);
+            }
             // Handle bullet lists: - Item -> <li>Item</li>
             else if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
+                if (inChecklist) { html.push("</ul>"); inChecklist = false; }
                 if (!inList) {
                     html.push("<ul>");
                     inList = true;
@@ -44,22 +56,21 @@ document.addEventListener("DOMContentLoaded", () => {
             } 
             // Handle empty line (ends lists or paragraphs)
             else if (trimmed === "") {
-                if (inList) {
-                    html.push("</ul>");
-                    inList = false;
-                }
+                if (inList) { html.push("</ul>"); inList = false; }
+                if (inChecklist) { html.push("</ul>"); inChecklist = false; }
             } 
             // Regular paragraphs
             else {
-                if (inList) {
-                    html.push("</ul>");
-                    inList = false;
-                }
+                if (inList) { html.push("</ul>"); inList = false; }
+                if (inChecklist) { html.push("</ul>"); inChecklist = false; }
                 html.push(`<p>${trimmed}</p>`);
             }
         }
 
         if (inList) {
+            html.push("</ul>");
+        }
+        if (inChecklist) {
             html.push("</ul>");
         }
 
@@ -78,6 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
         loader.classList.remove("hidden");
         submitBtn.disabled = true;
         printBtn.disabled = true;
+        copyBtn.disabled = true;
         statusText.textContent = "Crafting your adventure...";
         fullItineraryText = "";
 
@@ -128,6 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (dataStr === "[DONE]") {
                         statusText.textContent = "Itinerary completed!";
                         printBtn.disabled = false;
+                        copyBtn.disabled = false;
                         break;
                     }
 
@@ -158,6 +171,28 @@ document.addEventListener("DOMContentLoaded", () => {
             loader.classList.add("hidden");
             submitBtn.disabled = false;
         }
+    });
+
+    // Copy to clipboard handler
+    copyBtn.addEventListener("click", () => {
+        // Simple plain-text formatter for copy/paste convenience
+        const cleanText = fullItineraryText
+            .replace(/###\s+/g, "\n")
+            .replace(/\*\*/g, "")
+            .replace(/- \[\s\]\s/g, "[ ] ")
+            .replace(/- \[[xX]\]\s/g, "[x] ");
+        
+        navigator.clipboard.writeText(cleanText).then(() => {
+            const originalIcon = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i data-lucide="check"></i>';
+            lucide.createIcons();
+            setTimeout(() => {
+                copyBtn.innerHTML = originalIcon;
+                lucide.createIcons();
+            }, 2000);
+        }).catch(err => {
+            console.error("Failed to copy text: ", err);
+        });
     });
 
     // Print itinerary handler

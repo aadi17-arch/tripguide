@@ -59,7 +59,7 @@ app.post("/api/generate-itinerary", async (req, res) => {
          - A short theme/focus for the day (e.g., "Day 1: Historic Heart of the City").
          - Morning, Afternoon, and Evening activities with brief descriptions.
          - Suggested meal options (breakfast, lunch, dinner) aligned with the budget tier.
-      3. Provide a practical packing checklist tailored to the destination and activities.
+      3. Provide a practical packing checklist using the checklist format "- [ ] Item" (e.g. "- [ ] Sunglasses").
       4. Provide 3-4 local tips (transportation hacks, cultural etiquette, safety, or budgeting advice).
 
       Format the output cleanly using standard markdown headings (### for days, - for list items, ** for emphasis) so it can be parsed easily. Avoid raw HTML tags. Start directly with the itinerary introduction.
