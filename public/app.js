@@ -286,47 +286,214 @@ document.addEventListener("DOMContentLoaded", () => {
             <html>
             <head>
                 <title>Itinerary — ${currentDestination}</title>
+                <!-- Google Fonts -->
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
                 <style>
                     body {
-                        font-family: Arial, sans-serif;
+                        font-family: 'IBM Plex Sans', sans-serif;
                         line-height: 1.6;
-                        color: #1a1a1a;
+                        color: #1a1812;
                         padding: 3rem;
                         max-width: 800px;
                         margin: 0 auto;
-                        background-color: #fafafa;
+                        background-color: #faf9f6;
                     }
+                    
                     h1 {
+                        font-family: 'Fraunces', serif;
                         font-size: 2.2rem;
                         color: #0e5c4a;
                         margin: 0 0 0.5rem;
-                        border-bottom: 2px solid #55503f;
+                        border-bottom: 2px dashed #55503f;
                         padding-bottom: 1rem;
                     }
-                    h3 {
-                        color: #1e8a6e;
-                        margin-top: 2rem;
-                        border-bottom: 1px dashed #55503f;
-                        padding-bottom: 0.25rem;
-                    }
+
                     p {
+                        font-size: 0.9rem;
+                        color: #4a4538;
                         margin-bottom: 1rem;
-                        color: #333;
                     }
-                    ul {
-                        margin-bottom: 1.5rem;
-                        padding-left: 1.5rem;
+
+                    /* Day Block Grid */
+                    .day-block {
+                        display: grid;
+                        grid-template-columns: 70px 1fr;
+                        border-top: 1px dashed #55503f;
+                        padding-top: 1.5rem;
+                        margin-top: 1.5rem;
+                        page-break-inside: avoid;
                     }
-                    li {
+
+                    .day-block:first-of-type {
+                        border-top: none;
+                        padding-top: 0;
+                        margin-top: 0;
+                    }
+
+                    .day-col-left {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                    }
+
+                    .day-number {
+                        font-family: 'IBM Plex Mono', monospace;
+                        font-size: 1.8rem;
+                        font-weight: 600;
+                        color: #1e8a6e;
+                    }
+
+                    .day-label {
+                        font-family: 'IBM Plex Mono', monospace;
+                        font-size: 0.6rem;
+                        color: #8a8375;
+                        letter-spacing: 0.1em;
+                    }
+
+                    .day-title {
+                        font-family: 'Fraunces', serif;
+                        font-size: 1.15rem;
+                        font-weight: 600;
+                        color: #1a1812;
+                        margin-bottom: 0.75rem;
+                    }
+
+                    /* Route stops list */
+                    .route-list {
+                        position: relative;
+                        padding-left: 1.25rem;
+                        margin-top: 0.5rem;
+                        margin-bottom: 1rem;
+                    }
+
+                    .route-list::before {
+                        content: '';
+                        position: absolute;
+                        left: 4px;
+                        top: 5px;
+                        bottom: 5px;
+                        border-left: 2px dotted #55503f;
+                        opacity: 0.4;
+                    }
+
+                    .route-stop {
+                        position: relative;
+                        margin-bottom: 1rem;
+                    }
+
+                    .route-stop::before {
+                        content: '';
+                        position: absolute;
+                        left: -19.5px;
+                        top: 5px;
+                        width: 7px;
+                        height: 7px;
+                        border-radius: 50%;
+                        background-color: #c1442e;
+                    }
+
+                    .stop-header {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                    }
+
+                    .stop-time {
+                        font-family: 'IBM Plex Mono', monospace;
+                        font-size: 0.75rem;
+                        color: #8a8375;
+                    }
+
+                    .stop-name {
+                        font-size: 0.85rem;
+                        font-weight: 600;
+                        color: #1a1812;
+                    }
+
+                    .stop-note {
+                        font-size: 0.8rem;
+                        color: #55503f;
+                        margin-top: 0.15rem;
+                    }
+
+                    /* Red bullets for standard lists */
+                    ul:not(.checklist) {
+                        list-style-type: none;
+                        padding-left: 1rem;
+                        margin-top: 0.5rem;
+                        margin-bottom: 1rem;
+                    }
+
+                    ul:not(.checklist) li {
+                        position: relative;
+                        font-size: 0.85rem;
+                        color: #4a4538;
+                        margin-bottom: 0.35rem;
+                    }
+
+                    ul:not(.checklist) li::before {
+                        content: '';
+                        position: absolute;
+                        left: -0.85rem;
+                        top: 0.45rem;
+                        width: 5px;
+                        height: 5px;
+                        border-radius: 50%;
+                        background-color: #c1442e;
+                    }
+
+                    /* Checklist lists */
+                    ul.checklist {
+                        list-style-type: none;
+                        padding-left: 0.15rem;
+                        margin-top: 0.5rem;
+                        margin-bottom: 1rem;
+                    }
+
+                    ul.checklist li {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        font-size: 0.85rem;
+                        color: #4a4538;
+                    }
+
+                    ul.checklist input[type="checkbox"] {
+                        width: auto;
+                        margin: 0;
+                        accent-color: #1e8a6e;
+                    }
+
+                    /* Section divider dashed rules */
+                    hr {
+                        border: none;
+                        border-top: 1px dashed #55503f;
+                        margin: 1.5rem 0;
+                    }
+
+                    h3:not(.day-title) {
+                        font-family: 'Fraunces', serif;
+                        font-size: 1.15rem;
+                        color: #1a1812;
+                        border-top: 1px dashed #55503f;
+                        padding-top: 1rem;
+                        margin-top: 1.5rem;
                         margin-bottom: 0.5rem;
+                        page-break-after: avoid;
                     }
-                    strong {
-                        color: #c1442e;
+
+                    @media print {
+                        body {
+                            padding: 0;
+                            background-color: #ffffff;
+                        }
                     }
                 </style>
             </head>
             <body>
-                <h1>Itinerary — ${currentDestination.toUpperCase()}</h1>
+                <h1>ITINERARY — ${currentDestination.toUpperCase()}</h1>
                 <div>${renderMarkdown(fullItineraryText)}</div>
                 <script>
                     window.onload = function() {
