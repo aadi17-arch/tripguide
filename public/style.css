@@ -1,21 +1,21 @@
-/* Clean, Minimalist Dark Theme (Obsidian & Emerald) */
+/* Clean, Minimalist Dark Theme (Charcoal & Violet) */
 :root {
-    --bg-primary: #0b0f12;     /* Deep Obsidian */
-    --bg-secondary: #12181f;   /* Dark Navy Slate */
-    --border-color: #212c3a;   /* Slate Border */
-    --border-hover: #334358;
+    --bg-primary: #0a0a0c;     /* Deep Steel Charcoal */
+    --bg-secondary: #111115;   /* Dark Carbon Gray */
+    --border-color: #1e1e24;   /* Slate Border */
+    --border-hover: #2d2d37;
     
     --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
+    --text-secondary: #a1a1aa;
+    --text-muted: #52525b;
 
     /* Solid Clean Colors - No Gradients */
-    --primary: #10b981;        /* Solid Emerald Green */
-    --primary-bg-hover: #059669;
-    --danger: #f43f5e;        /* Rose Red */
+    --primary: #8b5cf6;        /* Solid Violet / Iris */
+    --primary-bg-hover: #7c3aed;
+    --danger: #ef4444;        /* Red */
     --success: #10b981;
 
-    --card-bg: #12181f;
+    --card-bg: #111115;
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
 
@@ -233,7 +233,7 @@ input:focus, select:focus, textarea:focus {
 
 .btn-primary {
     background-color: var(--primary);
-    color: #0b0f12; /* Dark text for emerald background contrast */
+    color: #ffffff; /* White text for contrast */
 }
 
 .btn-primary:hover {
