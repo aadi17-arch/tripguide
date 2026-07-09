@@ -51,7 +51,13 @@ app.post("/api/generate-itinerary", async (req, res) => {
   res.setHeader("Connection", "keep-alive");
 
   try {
-    const model = client.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = client.getGenerativeModel({
+      model: "gemini-2.5-flash",
+      generationConfig: {
+        temperature: 0.5,
+        maxOutputTokens: 2500
+      }
+    });
 
     // Detailed prompt designed for beautifully formatted markdown structure
     const prompt = `
