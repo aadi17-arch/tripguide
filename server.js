@@ -4,6 +4,14 @@ const cors = require("cors");
 const path = require("path");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
+// Prevent server crashes from unhandled promise rejections/uncaught exceptions (e.g. Gemini API hiccups)
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled Rejection at:", promise, "reason:", reason);
+});
+process.on("uncaughtException", (error) => {
+  console.error("Uncaught Exception caught:", error);
+});
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -69,9 +77,15 @@ app.post("/api/generate-itinerary", async (req, res) => {
     const result = await model.generateContentStream(prompt);
 
     for await (const chunk of result.stream) {
-      const chunkText = chunk.text();
-      // Send SSE data format
-      res.write(`data: ${JSON.stringify({ text: chunkText })}\n\n`);
+      try {
+        const chunkText = chunk.text();
+        if (chunkText) {
+          // Send SSE data format
+          res.write(`data: ${JSON.stringify({ text: chunkText })}\n\n`);
+        }
+      } catch (chunkErr) {
+        console.warn("Skipping chunk error (non-text/safety metadata):", chunkErr.message);
+      }
     }
 
     res.write("data: [DONE]\n\n");

@@ -402,6 +402,12 @@ input::placeholder, textarea::placeholder {
     overflow-y: auto;
     max-height: 520px;
     padding-right: 0.5rem;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.itinerary-output::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
 }
 
 .itinerary-output p {
