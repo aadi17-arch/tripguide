@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         margin: 0 auto;
                     }
                     h3 {
-                        color: #8b5cf6;
+                        color: #09090b;
                         border-bottom: 2px solid #e2e8f0;
                         padding-bottom: 0.5rem;
                         margin-top: 2rem;
