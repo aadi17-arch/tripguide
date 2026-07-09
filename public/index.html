@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Travel Planner</title>
+    <meta name="description" content="Generate simple day-by-day travel itineraries.">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <i data-lucide="compass" class="logo-icon"></i>
+                <span class="logo-text">Trip<span>Guide</span> <small class="badge">AI</small></span>
+            </div>
+            <div class="header-tagline">Simple Travel Itinerary Generator</div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-grid">
+            <!-- Form Card -->
+            <section class="form-panel card">
+                <div class="panel-header">
+                    <i data-lucide="map-pin" class="panel-icon"></i>
+                    <div>
+                        <h2>Trip Details</h2>
+                        <p>Enter details to plan your itinerary</p>
+                    </div>
+                </div>
+
+                <form id="itinerary-form" class="travel-form">
+                    <!-- Destination -->
+                    <div class="form-group">
+                        <label for="destination">Destination</label>
+                        <div class="input-wrapper">
+                            <i data-lucide="search" class="input-icon"></i>
+                            <input type="text" id="destination" name="destination" placeholder="e.g., London, Tokyo, New York" required>
+                        </div>
+                    </div>
+
+                    <!-- Row: Duration and Budget -->
+                    <div class="form-row">
+                        <!-- Days -->
+                        <div class="form-group">
+                            <label for="days">Duration (Days)</label>
+                            <div class="input-wrapper">
+                                <i data-lucide="calendar" class="input-icon"></i>
+                                <input type="number" id="days" name="days" min="1" max="14" value="3" required>
+                            </div>
+                        </div>
+
+                        <!-- Budget -->
+                        <div class="form-group">
+                            <label for="budget">Budget Level</label>
+                            <div class="input-wrapper">
+                                <i data-lucide="dollar-sign" class="input-icon"></i>
+                                <select id="budget" name="budget">
+                                    <option value="Budget">Low Budget</option>
+                                    <option value="Moderate" selected>Moderate</option>
+                                    <option value="Luxury">Premium</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interests -->
+                    <div class="form-group">
+                        <label for="interests">Interests & Preferences</label>
+                        <div class="input-wrapper">
+                            <i data-lucide="sparkles" class="input-icon"></i>
+                            <textarea id="interests" name="interests" rows="3" placeholder="e.g., museums, local food, parks, shopping"></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submit-btn" class="btn btn-primary">
+                        <span>Generate Itinerary</span>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Result Card -->
+            <section class="result-panel card">
+                <div class="panel-header result-header">
+                    <div class="header-left">
+                        <i data-lucide="route" class="panel-icon"></i>
+                        <div>
+                            <h2>Itinerary</h2>
+                            <p id="status-text">Your trip plan will appear here</p>
+                        </div>
+                    </div>
+                    <div class="header-actions">
+                        <button id="print-btn" class="btn btn-secondary btn-icon" title="Print/Save Itinerary" disabled>
+                            <i data-lucide="printer"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="empty-state">
+                    <div class="empty-illustration">
+                        <i data-lucide="plane" class="plane-icon"></i>
+                    </div>
+                    <h3>No itinerary generated yet</h3>
+                    <p>Enter your destination and preferences on the left to generate a day-by-day plan.</p>
+                </div>
+
+                <!-- Stream Output Container -->
+                <div id="itinerary-output" class="itinerary-output hidden"></div>
+
+                <!-- Error Container -->
+                <div id="error-container" class="error-container hidden">
+                    <i data-lucide="alert-triangle" class="error-icon"></i>
+                    <div class="error-message">
+                        <h4>Error occurred</h4>
+                        <p id="error-text">Failed to generate itinerary.</p>
+                    </div>
+                </div>
+
+                <!-- Loader -->
+                <div id="loader" class="loader hidden">
+                    <div class="spinner"></div>
+                    <span>Generating your itinerary...</span>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <p>&copy; 2026 TripGuide AI. Powered by AWS App Runner.</p>
+    </footer>
+
+    <!-- App Script -->
+    <script src="app.js"></script>
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
