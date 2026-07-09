@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Travel Planner</title>
+    <title>TripGuide AI — Travel Boarding Pass</title>
     <meta name="description" content="Generate simple day-by-day travel itineraries.">
-    <!-- Google Fonts: Inter -->
+    <!-- Google Fonts: Fraunces, IBM Plex Sans, IBM Plex Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- Main Style -->
     <link rel="stylesheet" href="style.css">
     <!-- Lucide Icons -->
@@ -22,36 +22,34 @@
                 <i data-lucide="compass" class="logo-icon"></i>
                 <span class="logo-text">Trip<span>Guide</span> <small class="badge">AI</small></span>
             </div>
-            <div class="header-tagline">Simple Travel Itinerary Generator</div>
+            <div class="header-tagline">Boarding Pass & Field Journal</div>
         </header>
 
-        <!-- Main Content -->
-        <main class="main-grid">
-            <!-- Form Card -->
-            <section class="form-panel card">
-                <div class="panel-header">
-                    <i data-lucide="map-pin" class="panel-icon"></i>
-                    <div>
-                        <h2>Trip Details</h2>
-                        <p>Enter details to plan your itinerary</p>
-                    </div>
+        <!-- Main Ticket Layout -->
+        <main class="ticket-container">
+            <!-- Left Panel (Ticket Stub) -->
+            <section class="ticket-stub">
+                <div class="stub-header">
+                    <span class="eyebrow">PASSENGER DETAILS</span>
+                    <h2>Trip details</h2>
+                    <p class="subcopy">Enter details to plan your itinerary</p>
                 </div>
 
                 <form id="itinerary-form" class="travel-form">
                     <!-- Destination -->
                     <div class="form-group">
-                        <label for="destination">Destination</label>
+                        <label for="destination">DESTINATION</label>
                         <div class="input-wrapper">
                             <i data-lucide="search" class="input-icon"></i>
-                            <input type="text" id="destination" name="destination" placeholder="e.g., London, Tokyo, New York" required>
+                            <input type="text" id="destination" name="destination" placeholder="e.g. Lisbon, Kyoto, Reykjavík" required>
                         </div>
                     </div>
 
-                    <!-- Row: Duration and Budget -->
+                    <!-- Grid: Duration and Budget -->
                     <div class="form-row">
                         <!-- Days -->
                         <div class="form-group">
-                            <label for="days">Duration (Days)</label>
+                            <label for="days">DURATION (DAYS)</label>
                             <div class="input-wrapper">
                                 <i data-lucide="calendar" class="input-icon"></i>
                                 <input type="number" id="days" name="days" min="1" max="14" value="3" required>
@@ -60,7 +58,7 @@
 
                         <!-- Budget -->
                         <div class="form-group">
-                            <label for="budget">Budget Level</label>
+                            <label for="budget">BUDGET LEVEL</label>
                             <div class="input-wrapper">
                                 <i data-lucide="dollar-sign" class="input-icon"></i>
                                 <select id="budget" name="budget">
@@ -74,16 +72,16 @@
 
                     <!-- Interests -->
                     <div class="form-group">
-                        <label for="interests">Interests & Preferences</label>
+                        <label for="interests">INTERESTS & PREFERENCES</label>
                         <div class="input-wrapper">
                             <i data-lucide="sparkles" class="input-icon"></i>
-                            <textarea id="interests" name="interests" rows="3" placeholder="e.g., museums, local food, parks, shopping"></textarea>
+                            <textarea id="interests" name="interests" rows="4" placeholder="e.g. museums, local food, parks, shopping"></textarea>
                         </div>
                     </div>
 
-                    <div class="form-actions" style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 0.75rem;">
+                    <div class="form-actions">
                         <button type="submit" id="submit-btn" class="btn btn-primary">
-                            <span>Generate Itinerary</span>
+                            <span>Generate itinerary</span>
                         </button>
                         <button type="button" id="reset-btn" class="btn btn-secondary">
                             <span>Clear</span>
@@ -92,33 +90,58 @@
                 </form>
             </section>
 
-            <!-- Result Card -->
-            <section class="result-panel card">
-                <div class="panel-header result-header">
+            <!-- Perforation Seam Elements -->
+            <div class="perforation-line"></div>
+            <div class="perforation-notch notch-top"></div>
+            <div class="perforation-notch notch-bottom"></div>
+
+            <!-- Right Panel (Ticket Body) -->
+            <section class="ticket-body">
+                <div class="body-header">
                     <div class="header-left">
-                        <i data-lucide="route" class="panel-icon"></i>
-                        <div>
-                            <h2>Itinerary</h2>
-                            <p id="status-text">Your trip plan will appear here</p>
+                        <h2>Itinerary</h2>
+                        <p id="status-text" class="subcopy">destination · days · budget</p>
+                    </div>
+                    
+                    <div class="header-right">
+                        <div class="header-actions">
+                            <button id="copy-btn" class="btn btn-secondary btn-icon" title="Copy to Clipboard" disabled>
+                                <i data-lucide="copy"></i>
+                            </button>
+                            <button id="print-btn" class="btn btn-secondary btn-icon" title="Print/Save Itinerary" disabled>
+                                <i data-lucide="printer"></i>
+                            </button>
                         </div>
                     </div>
-                    <div class="header-actions">
-                        <button id="copy-btn" class="btn btn-secondary btn-icon" title="Copy to Clipboard" disabled>
-                            <i data-lucide="copy"></i>
-                        </button>
-                        <button id="print-btn" class="btn btn-secondary btn-icon" title="Print/Save Itinerary" disabled>
-                            <i data-lucide="printer"></i>
-                        </button>
-                    </div>
+                </div>
+
+                <!-- Postmark Stamp (CONFIRMED Signature Element) -->
+                <div id="postmark-stamp" class="postmark-stamp hidden">
+                    <svg width="110" height="110" viewBox="0 0 110 110">
+                        <circle cx="55" cy="55" r="48" fill="none" stroke="var(--red)" stroke-width="1.5" />
+                        <circle cx="55" cy="55" r="42" fill="none" stroke="var(--red)" stroke-width="1" stroke-dasharray="2,2" />
+                        <path id="curve-top" d="M 18,55 A 37,37 0 0 1 92,55" fill="none" />
+                        <path id="curve-bottom" d="M 92,55 A 37,37 0 0 1 18,55" fill="none" />
+                        <text fill="var(--red)" font-family="var(--font-mono)" font-size="7" font-weight="bold" letter-spacing="1">
+                            <textPath href="#curve-top" startOffset="50%" text-anchor="middle" id="stamp-destination">KYOTO</textPath>
+                        </text>
+                        <text fill="var(--red)" font-family="var(--font-mono)" font-size="7" font-weight="bold" letter-spacing="1.5">
+                            <textPath href="#curve-bottom" startOffset="50%" text-anchor="middle">CONFIRMED</textPath>
+                        </text>
+                        <!-- Compass Needle -->
+                        <line x1="55" y1="42" x2="55" y2="68" stroke="var(--red)" stroke-width="2" />
+                        <polygon points="55,38 52,44 58,44" fill="var(--red)" />
+                        <polygon points="55,72 52,66 58,66" fill="var(--red)" />
+                        <circle cx="55" cy="55" r="2" fill="var(--red)" />
+                    </svg>
                 </div>
 
                 <!-- Empty State -->
                 <div id="empty-state" class="empty-state">
-                    <div class="empty-illustration">
-                        <i data-lucide="plane" class="plane-icon"></i>
+                    <div class="empty-outline">
+                        <h3>No destination stamped yet</h3>
+                        <p>Enter your destination and preferences to generate a day-by-day plan.</p>
                     </div>
-                    <h3>No itinerary generated yet</h3>
-                    <p>Enter your destination and preferences on the left to generate a day-by-day plan.</p>
                 </div>
 
                 <!-- Stream Output Container -->
@@ -136,7 +159,7 @@
                 <!-- Loader -->
                 <div id="loader" class="loader hidden">
                     <div class="spinner"></div>
-                    <span>Generating your itinerary...</span>
+                    <span>Generating itinerary...</span>
                 </div>
             </section>
         </main>

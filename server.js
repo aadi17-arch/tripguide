@@ -54,15 +54,16 @@ app.post("/api/generate-itinerary", async (req, res) => {
       - Travel Style & Interests: ${interests || "General sightseeing, culture, local food"}
 
       Requirements:
-      1. Provide a catchy, welcoming introduction for the trip.
-      2. For each day, include:
-         - A short theme/focus for the day (e.g., "Day 1: Historic Heart of the City").
-         - Morning, Afternoon, and Evening activities with brief descriptions.
-         - Suggested meal options (breakfast, lunch, dinner) aligned with the budget tier.
+      1. Provide a brief, welcoming introduction.
+      2. For each day, use this structure:
+         ### Day X: Day Title
+         * 09:00 - Stop Name: One-line note about morning activities.
+         * 13:00 - Stop Name: One-line note about afternoon activities and lunch.
+         * 19:00 - Stop Name: One-line note about evening plans and dinner.
       3. Provide a practical packing checklist using the checklist format "- [ ] Item" (e.g. "- [ ] Sunglasses").
       4. Provide 3-4 local tips (transportation hacks, cultural etiquette, safety, or budgeting advice).
 
-      Format the output cleanly using standard markdown headings (### for days, - for list items, ** for emphasis) so it can be parsed easily. Avoid raw HTML tags. Start directly with the itinerary introduction.
+      Format the output cleanly. For days, use "### Day X: Day Title" and for stops, use the "* HH:MM - Stop Name: Note" format precisely. Avoid raw HTML tags. Start directly with the itinerary introduction.
     `;
 
     const result = await model.generateContentStream(prompt);
