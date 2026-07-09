@@ -351,6 +351,39 @@ input:focus, select:focus, textarea:focus {
     color: var(--primary);
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 0.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+}
+
+.itinerary-output h3::after {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-right: 2px solid var(--text-secondary);
+    border-bottom: 2px solid var(--text-secondary);
+    transform: rotate(45deg);
+    transition: transform 0.2s ease;
+    margin-right: 0.5rem;
+}
+
+.itinerary-output h3.header-collapsed::after {
+    transform: rotate(-135deg);
+}
+
+.collapsible-content {
+    max-height: 2000px; /* High enough to contain long daily plans */
+    overflow: hidden;
+    transition: max-height 0.25s ease-out, opacity 0.15s ease-out;
+    opacity: 1;
+}
+
+.collapsible-content.collapsed {
+    max-height: 0;
+    opacity: 0;
+    margin-bottom: 0;
 }
 
 .itinerary-output h3:first-of-type {

@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const submitBtn = document.getElementById("submit-btn");
     const printBtn = document.getElementById("print-btn");
     const copyBtn = document.getElementById("copy-btn");
+    const resetBtn = document.getElementById("reset-btn");
     const emptyState = document.getElementById("empty-state");
     const outputContainer = document.getElementById("itinerary-output");
     const errorContainer = document.getElementById("error-container");
@@ -141,6 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         statusText.textContent = "Itinerary completed!";
                         printBtn.disabled = false;
                         copyBtn.disabled = false;
+                        makeSectionsCollapsible();
                         break;
                     }
 
@@ -270,4 +272,44 @@ document.addEventListener("DOMContentLoaded", () => {
         `);
         printWindow.document.close();
     });
+
+    // Reset button handler
+    resetBtn.addEventListener("click", () => {
+        form.reset();
+        emptyState.classList.remove("hidden");
+        outputContainer.classList.add("hidden");
+        outputContainer.innerHTML = "";
+        errorContainer.classList.add("hidden");
+        printBtn.disabled = true;
+        copyBtn.disabled = true;
+        statusText.textContent = "Your trip plan will appear here";
+        fullItineraryText = "";
+    });
+
+    // Convert daily headers into collapsible panels
+    function makeSectionsCollapsible() {
+        const headers = outputContainer.querySelectorAll("h3");
+        headers.forEach((header) => {
+            header.style.cursor = "pointer";
+            
+            // Wrap elements between this H3 and the next H3 in a collapsible container
+            const wrapper = document.createElement("div");
+            wrapper.className = "collapsible-content";
+            
+            let next = header.nextElementSibling;
+            while (next && next.tagName !== "H3") {
+                const current = next;
+                next = next.nextElementSibling;
+                wrapper.appendChild(current);
+            }
+            
+            header.parentNode.insertBefore(wrapper, header.nextSibling);
+            
+            // Toggle open/collapsed state
+            header.addEventListener("click", () => {
+                wrapper.classList.toggle("collapsed");
+                header.classList.toggle("header-collapsed");
+            });
+        });
+    }
 });
