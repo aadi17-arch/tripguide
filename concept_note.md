@@ -29,5 +29,5 @@ Planning travel is a time-consuming process. Users often spend hours cross-refer
 Users experience a premium, glassmorphic UI with zero lag. Instead of waiting for a black-box API response, they watch their travel plan unfold line-by-line. They receive an actionable, exportable travel itinerary matching their exact needs, increasing confidence and reducing travel preparation time by over 90%.
 
 ---
-### Public AWS URL:
-* **Live Deployment Link**: `[PASTE_YOUR_AWS_APP_RUNNER_OR_BEANSTALK_URL_HERE]`
+### Public Deployment URL:
+* **Live Deployment Link**: [https://tripguide.onrender.com/](https://tripguide.onrender.com/)

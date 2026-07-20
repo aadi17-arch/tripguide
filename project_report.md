@@ -8,7 +8,7 @@ TripGuide AI is a full-stack, containerized AI web application that leverages th
 * **Backend**: Node.js, Express (lightweight server, SSE/streaming API support, secure backend environment variable handling).
 * **AI Engine**: Google Gemini 1.5 Flash via `@google/generative-ai` SDK.
 * **Containerization**: Docker (multi-stage lightweight build using `node:20-alpine`).
-* **Cloud Infrastructure**: AWS App Runner (serverless container hosting with automated deployment and SSL).
+* **Cloud Infrastructure**: Render.com (automated Docker container hosting with SSL and custom domain).
 
 ---
 
@@ -102,5 +102,5 @@ sequenceDiagram
 * **Security Discipline**: Keeping the Gemini API Key completely decoupled from client-side code and loading it securely via server environment variables is a critical cloud development best practice.
 
 ---
-### Public AWS URL:
-* **Live Deployment Link**: `[PASTE_YOUR_AWS_APP_RUNNER_OR_BEANSTALK_URL_HERE]`
+### Public Deployment URL:
+* **Live Deployment Link**: [https://tripguide.onrender.com/](https://tripguide.onrender.com/)
